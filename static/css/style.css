@@ -1,0 +1,12 @@
+.search-filter {
+    position: relative;
+    padding-right: 45px;
+}
+    .search-filter button {
+        position: absolute;
+        right: 0;
+    }
+
+.nav-pagination {
+    text-align: center;
+}

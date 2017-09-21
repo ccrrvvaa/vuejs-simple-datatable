@@ -1,0 +1,69 @@
+<!-- component template -->
+<script type="text/x-template" id="grid-template">
+    <div class="list-view">
+        <form id="search" class="form-inline">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 form-group">
+                    <button type="button" class="btn btn-primary" @click="searchBy">Agregar</button>
+                </div>
+                <div class="col-xs-12 col-sm-6 form-group">
+                    <div class="search-filter">
+                        <input id="grid-search-input" type="text"
+                            class="form-control pull-right" placeholder="Buscar club..." v-on:keydown.enter.prevent="searchBy">
+                        <button type="button" class="btn btn-default" @click="searchBy">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="grid-mob-container">
+            <div class="table-responsive">
+                <table class="table table-striped" v-if="pages > 0">
+                    <thead>
+                        <tr>
+                            <th v-for="key in columns" @click="sortBy(key.name)">
+                                {{ key.label | capitalize }}
+                                <span v-if="sortKey == key.name" class="glyphicon"
+                                    :class="{ 'glyphicon-triangle-bottom': sort == 'desc', 'glyphicon-triangle-top': sort == 'asc' }"
+                                    aria-hidden="true"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="entry in data">
+                            <td v-for="key in columns">
+                                <a v-if="editUrl && key.edit" :href="editUrl.replace('<pk>', entry[pk])">{{entry[key.name]}}</a>
+                                <template v-else>{{ entry[key.name] }}</template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="border-panel not-clickable" v-else>
+                    <p>&nbsp;&nbsp;No hay datos</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav-pagination" aria-label="Page navigation" v-if="pages > 1">
+            <ul class="pagination">
+                <template v-for="p in pages">
+                    <li v-if="p == 1">
+                        <a href="#" aria-label="Previous" @click="currentPage != 1 ? goTo(1) : null">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li :class="p == currentPage ? 'active' : ''" @click="currentPage == p ? null : goTo(p)">
+                        <a href="#">{{ p }}</a>
+                    </li>
+                    <li v-if="p == pages">
+                        <a href="#" aria-label="Next" @click="currentPage != pages ? goTo(pages) : null">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </nav>
+    </div>
+</script>
