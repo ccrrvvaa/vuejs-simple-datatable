@@ -42,4 +42,7 @@ var listContainer = new Vue({
 });
 listContainer.$children[0].loadData();
 ```
-Just make sure to include the content of templates/templates.html before your js code.
+Just make sure to include the content of templates/templates.html and static/js/vue-components.js before the previous js code.
+
+# Notes
+* I'm using Flask (python 3) just as a backend system in order to get data by ajax, but the datatable is independent of your backend implementation. Additionally you can check the pagination/sorting/searching logic in backend. Instead of using a database, I'm using a simple json file with a list of football clubs.
